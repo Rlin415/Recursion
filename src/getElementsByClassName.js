@@ -7,30 +7,31 @@
 var getElementsByClassName = function(className
 ){
 
-  var result = [];
+  var elementsWithClassName = [];
   var prev = arguments[1] || document.children[0].children[1];
-  /*if (typeof className !== string) {
+
+  if (typeof className !== "string") {
     console.log('Error! Input is not a string.');
     return;
-  }*/
+  }
 
   if (prev.children.length === 0) {
-    var arrayOfNames = prev.className.split(' ');
-      if (arrayOfNames.indexOf(className) !== -1) {
-        result.push(prev);
-      }
-      return result;
+    var arrayOfName = prev.className.split(' ');
+    if (arrayOfName.indexOf(className) !== -1) {
+      elementsWithClassName.push(prev);
+    }
+    return elementsWithClassName;
   }
 
   for (var i = 0; i < prev.children.length; i++) {
-    var result2 = getElementsByClassName(className, prev.children[i]);
-    if (result2.length > 0) {
-      result = result2.concat(result);
+    var tempArrayOfElementsWithClassName = getElementsByClassName(className, prev.children[i]);
+    if (tempArrayOfElementsWithClassName.length > 0) {
+      elementsWithClassName = tempArrayOfElementsWithClassName.concat(elementsWithClassName);
     }
   }
 
   if (prev.className === className) {
-      result.unshift(prev);
+      elementsWithClassName.unshift(prev);
   }
-  return result;
+  return elementsWithClassName;
 };
