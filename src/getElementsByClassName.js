@@ -7,13 +7,14 @@
 var getElementsByClassName = function(className
 ){
 
-  var elementsWithClassName = [];
-  var prev = arguments[1] || document.children[0].children[1];
-
+// Termination condition
   if (typeof className !== "string") {
     console.log('Error! Input is not a string.');
     return;
   }
+
+  var elementsWithClassName = [];
+  var prev = arguments[1] || document.children[0].children[1];
 
   if (prev.children.length === 0) {
     var arrayOfName = prev.className.split(' ');
