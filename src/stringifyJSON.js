@@ -4,12 +4,12 @@
 // but you don't so you're going to write it from scratch:
 
 var stringifyJSON = function(obj) {
-  // your code goes here
   var string = '';
   if (typeof obj === 'number' || obj === true || obj === false || obj === null) {
     return string.concat(obj);
   }
 
+// Stringify Array
   if (Array.isArray(obj)) {
     string = '[';
     obj.forEach(function(element, idx) {
@@ -17,8 +17,10 @@ var stringifyJSON = function(obj) {
         element = '\"' + element + '\"';
       } else if (Array.isArray(element)) {
         element = stringifyJSON(element);
+      } else if (typeof element === 'object') {
+        element = stringifyJSON(element);
       }
-      if (obj.length > 1 && idx !== 0) {
+      if (idx > 0) {
         string = string.concat(',', element);
       } else {
         string  = string.concat(element);
@@ -26,6 +28,29 @@ var stringifyJSON = function(obj) {
     });
     return string + (']');
   }
+
+//Stringify Object
+  if (typeof obj === 'object') {
+    string = '{';
+    var tempString;
+    var idx = 0;
+    for (var key in obj) {
+      if (typeof obj[key] === 'string') {
+        obj[key] = '\"' + obj[key] + '\"';
+      } else if (typeof obj[key] === 'object') {
+        obj[key] = stringifyJSON(obj[key]);
+      } else if (typeof obj[key] === 'function' || obj[key] === undefined) {
+        continue;
+      }
+      if (idx > 0) {
+        string = string.concat(',\"' + key + '\"', ':', obj[key]);
+      } else {
+        string = string.concat('\"' + key + '\"', ':', obj[key]);
+      }
+      idx++;
+    }
+      return string.concat('}');
+    }
 
   return '\"' + obj + '\"';
 };
