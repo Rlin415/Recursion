@@ -26,13 +26,12 @@ var stringifyJSON = function(obj) {
         string  = string.concat(element);
       }
     });
-    return string + (']');
+    return string.concat(']');
   }
 
 //Stringify Object
   if (typeof obj === 'object') {
     string = '{';
-    var tempString;
     var idx = 0;
     for (var key in obj) {
       if (typeof obj[key] === 'string') {
@@ -52,5 +51,6 @@ var stringifyJSON = function(obj) {
       return string.concat('}');
     }
 
+// If object is a string
   return '\"' + obj + '\"';
 };
